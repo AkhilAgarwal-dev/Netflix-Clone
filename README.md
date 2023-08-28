@@ -3,8 +3,21 @@
 - create react-app
 - configure Tailwind
 - Header
+- Routing
 - login Form
 - Signup Form
+- Form Validations
+- useRef hooks
+- Firebase Setup
+- Deploying app to production
+- Create Signup user account in firebase
+- Implement Sign In API
+- Created Redux Store with user Slice
+- Implemented Signout Feature
+- Update Profile
+- Fetch from TMDB Movies
+
+
 
 
 
