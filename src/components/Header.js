@@ -5,11 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser} from "../utils/userSlice";
 import { LOGO } from "../utils/constants"
+import { toggleGptSearchView } from "../utils/gptSlice";
+import {SUPPORTED_LANGUAGES} from "../utils/constants";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGPTSearch = useSelector(store=>store.gpt.showGPTSearch)
+  const handleGPTSearchClick = () =>{
+   // Toggle GPT Search button
+   dispatch(toggleGptSearchView);
+  }
+  const handleLanguageChange= (e) =>{
+ dispatch(changeLanguage(e.target.value));
+  }
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -49,6 +61,14 @@ const Header = () => {
       />
       {user && (
         <div className="flex p-2">
+          {showGPTSearch && (<select className="p-2 bg-gray-900 text-white" onChange={handleLanguageChange}>
+            {SUPPORTED_LANGUAGES.map(lang=><option key ={lang.identifier}value="en">English</option>)}
+            
+            <option value="hindi">Hindi</option>
+            <option value="spanish">Spanish</option>
+          </select>)}
+          <button className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg" onClick={handleGPTSearchClick}>{showGPTSearch? "HomePage":"GPT SEARCH"}</button>
+          
           <img className="w-12 h-12" alt="usericon" src={user?.photoURL} />
           <button onClick={handleSignOut} className="font-bold text-white ">
             (Sign Out)
